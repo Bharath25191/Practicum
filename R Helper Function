@@ -1,0 +1,36 @@
+anomaly_detector <- function(feature,Z=3){
+    results<-c()
+    diff<-c()
+    n <- 0
+    i=0
+    X = sort(feature)
+    for (j in feature) {
+      if (i==0){
+        value = j
+      }
+      else{
+        value = feature[i] - feature[i-1]
+      }
+      diff<-append(diff,value)
+      i = i + 1
+      print(feature[i])
+    }
+    X_mean = mean(diff)
+    X_std = sd(diff)
+    X_upper = X_mean + X_std*3
+    X_lower = X_mean - X_std*3
+    print(X_upper)
+    print(X_lower)
+    i = 0
+    for (j in feature){
+      if(X_upper < j || X_lower > j){
+        results<-append(results,"Outlier")
+        n = n +1
+      }
+    else{
+      results<-append(results,"Standard")}
+      i = i+1
+    }
+    return(n)
+    }
+    
